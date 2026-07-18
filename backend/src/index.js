@@ -15,11 +15,17 @@ import Message from './models/message.model.js';
 import { connectDB } from './lib/db.js';
 import job from "./lib/cron.js";
 
+import clerkWebhook from "./webhooks/clerk.webhook.js";
 
 const app = express();
 const port = process.env.PORT ;
 const FRONTEND_URL = process.env.FRONTEND_URL ;
 const publicDir = path.join(process.cwd(), 'public');
+
+APP.USE("/API/WEBHOOKS/CLERK",express.raw({type:"application/json"}),clerkWebhook);
+
+
+
 
 app.use(express.json());
 app.use(cors({origin:FRONTEND_URL , credentials:true}));
